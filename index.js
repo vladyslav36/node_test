@@ -10,7 +10,7 @@ const app = express()
 app.use(express.json())
 
 app.get('/', (req, res) => {
-  res.status(200).json({message:'hello'})
+  res.status(200).json({message:'hello22'})
 })
 
 app.listen(PORT, () => {
