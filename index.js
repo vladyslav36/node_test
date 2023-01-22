@@ -12,7 +12,7 @@ const MODE = process.env.MODE
 const bot = new viberBot({
   authToken: process.env.VIBER_TOKEN,
   name: "karmenshop",
-  // avatar: "http://viber.com/avatar.jpg", 
+  avatar: "http://viber.com/avatar.jpg", 
 })
 
 const app = express()
