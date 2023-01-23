@@ -21,7 +21,7 @@ app.use(express.json())
 
 app.use("/viber/webhook", (req, res) => {
   console.log('hello')
-}))
+})
 
 app.get('/', (req, res) => {
   res.status(200).json({message:'main page '})
