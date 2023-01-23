@@ -19,7 +19,9 @@ bot.setWebhook("https://drab-ruby-piglet-hat.cyclic.app/viber/webhook")
 const app = express()
 app.use(express.json())
 
-app.use("/viber/webhook", bot.middleware())
+app.use("/viber/webhook", (req, res) => {
+  console.log('hello')
+}))
 
 app.get('/', (req, res) => {
   res.status(200).json({message:'main page '})
