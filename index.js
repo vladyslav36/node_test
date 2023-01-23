@@ -18,20 +18,19 @@ const bot = new viberBot({
 const app = express()
 app.use(express.json())
 
-app.use("/viber/webhook", bot.middleware())
+app.use("/viber/webhook", bot.middleware((req, res) => {
+  res.send('hello')
+}))
 
 app.get('/', (req, res) => {
   res.status(200).json({message:'main page '})
 })
 
-bot.on(botEvents.MESSAGE_RECEIVED, (message, response) => {
-  // Echo's back the message to the client. Your bot logic should sit here.
-  response.send(message)
-})
+
 
 
 
 app.listen(PORT, () => {
   console.log(`Server running in ${MODE} mode on port ${PORT}`)
-  bot.setWebhook(procwss.env.WEBHOOK_URL)
+  
 })
