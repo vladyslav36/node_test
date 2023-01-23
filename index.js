@@ -18,19 +18,18 @@ const bot = new viberBot({
 const app = express()
 app.use(express.json())
 
-app.use("/viber/webhook", bot.middleware((req, res) => {
-  res.send('hello')
-}))
+app.use("/viber/webhook", bot.middleware())
 
 app.get('/', (req, res) => {
   res.status(200).json({message:'main page '})
 })
 
-
-
+bot.on(botEvents.MESSAGE_RECEIVED, (message, response) => {
+  response.send(message)
+})
 
 
 app.listen(PORT, () => {
-  console.log(`Server running in ${MODE} mode on port ${PORT}`)
   
+   bot.setWebhook("https://drab-ruby-piglet-hat.cyclic.app/viber/webhook").then(()=>console.log(`Server running in ${MODE} mode on port ${PORT}`))
 })
