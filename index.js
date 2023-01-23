@@ -33,4 +33,5 @@ bot.on(botEvents.MESSAGE_RECEIVED, (message, response) => {
 
 app.listen(PORT, () => {
   console.log(`Server running in ${MODE} mode on port ${PORT}`)
+  bot.setWebhook(procwss.env.WEBHOOK_URL)
 })
