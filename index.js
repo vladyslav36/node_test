@@ -2,6 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 const viberBot = require('viber-bot').Bot
 const botEvents = require('viber-bot').Events
+const TextMessage = require('viber-bot').Message.Text
 
 
 dotenv.config()
@@ -24,9 +25,11 @@ app.use("/viber/webhook", bot.middleware())
 app.get('/', (req, res) => {
   res.status(200).json({message:'main page '})
 })
-
+bot.on(botEvents.SUBSCRIBED, res => {
+  res.send(new TextMessage('hi'))
+})
 bot.on(botEvents.MESSAGE_RECEIVED, (message, response) => {  
-  response.send(message)
+  response.send(new TextMessage(message))
 
 })
 
