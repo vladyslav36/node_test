@@ -31,5 +31,6 @@ bot.on(botEvents.MESSAGE_RECEIVED, (message, response) => {
 
 app.listen(PORT, () => {
   
-   bot.setWebhook("https://drab-ruby-piglet-hat.cyclic.app/viber/webhook").then(()=>console.log(`Server running in ${MODE} mode on port ${PORT}`))
+   bot.setWebhook("https://drab-ruby-piglet-hat.cyclic.app/viber/webhook")
+   console.log(`Server running in ${MODE} mode on port ${PORT}`)
 })
