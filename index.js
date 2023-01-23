@@ -14,6 +14,7 @@ const bot = new viberBot({
   name: "karmenshop",
   avatar: "http://viber.com/avatar.jpg", 
 })
+bot.setWebhook("https://drab-ruby-piglet-hat.cyclic.app/viber/webhook")
 
 const app = express()
 app.use(express.json())
@@ -25,12 +26,14 @@ app.get('/', (req, res) => {
 })
 
 bot.on(botEvents.MESSAGE_RECEIVED, (message, response) => {
+  console.log(message)
   response.send(message)
+
 })
 
 
 app.listen(PORT, () => {
   
-   bot.setWebhook("https://drab-ruby-piglet-hat.cyclic.app/viber/webhook")
+   
    console.log(`Server running in ${MODE} mode on port ${PORT}`)
 })
