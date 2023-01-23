@@ -12,30 +12,26 @@ const MODE = process.env.MODE
 const bot = new viberBot({
   authToken: process.env.VIBER_TOKEN,
   name: "karmenshop",
-  avatar: "http://viber.com/avatar.jpg", 
+  avatar: "/upload/logo.png", 
 })
-bot.setWebhook("https://drab-ruby-piglet-hat.cyclic.app/viber/webhook")
+
 
 const app = express()
 app.use(express.json())
 
-app.use("/viber/webhook", (req, res) => {
-  console.log('hello')
-})
+app.use("/viber/webhook", bot.middleware())
 
 app.get('/', (req, res) => {
   res.status(200).json({message:'main page '})
 })
 
-bot.on(botEvents.MESSAGE_RECEIVED, (message, response) => {
-  console.log(message)
+bot.on(botEvents.MESSAGE_RECEIVED, (message, response) => {  
   response.send(message)
 
 })
 
 
-app.listen(PORT, () => {
-  
-   
-   console.log(`Server running in ${MODE} mode on port ${PORT}`)
+app.listen(PORT, () => {   
+  console.log(`Server running in ${MODE} mode on port ${PORT}`)
+  bot.setWebhook("https://drab-ruby-piglet-hat.cyclic.app/viber/webhook")
 })
