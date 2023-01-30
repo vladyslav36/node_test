@@ -25,7 +25,7 @@ bot
     const authKey = context
     
     try {
-      const user = await findOne({ authKey })
+      const user = await User.findOne({ authKey })
       if (!user) {
         await User.create({ authKey, userProfile })
       }      
