@@ -58,14 +58,14 @@ const MODE = process.env.MODE
 
 app.use(cors())
 
-app.use(express.json())
+
 
 app.use("/upload", express.static(path.join(__dirname, "/upload")))
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "main page " })
 })
-app.post("/api", (req, res) => {
+app.post("/api",express.json(), (req, res) => {
   const { authKey } = req.body
   
   
