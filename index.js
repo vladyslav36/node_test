@@ -22,10 +22,13 @@ bot
   .catch((error) => console.log(`This is error ${error.message}`))
 
   bot.onConversationStarted(async (userProfile, isSubscribed, context, onFinish) => {
-  console.log(context)
-    console.log(userProfile)
+    const authKey = context
+    
     try {
-      await User.create({ authKey:context, userProfile })
+      const user = await findOne({ authKey })
+      if (!user) {
+        await User.create({ authKey, userProfile })
+      }      
       bot.sendMessage(
       userProfile,
       new TextMessage(
@@ -65,7 +68,7 @@ app.use("/upload", express.static(path.join(__dirname, "/upload")))
 app.get("/", (req, res) => {
   res.status(200).json({ message: "main page " })
 })
-app.post("/api",express.json(), (req, res) => {
+app.post("/api",express.json(),  (req, res) => {
   const { authKey } = req.body
   
   
