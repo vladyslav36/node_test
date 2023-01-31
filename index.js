@@ -6,7 +6,8 @@ const botEvents = require("viber-bot").Events
 const TextMessage = require("viber-bot").Message.Text
 const connectDb = require('./connectDb')
 const User = require('./model/User')
-const cors=require('cors')
+const cors = require('cors')
+const jwt=require('jsonwebtoken')
 
 dotenv.config()
 connectDb()
@@ -22,13 +23,16 @@ bot
   .catch((error) => console.log(`This is error ${error.message}`))
 
   bot.onConversationStarted(async (userProfile, isSubscribed, context, onFinish) => {
-    const authKey = context
+    
+   
     
     try {
-      const user = await User.findOne({ authKey })
+     let user=await User.findOne({userId:userProfile.id})
       if (!user) {
-        await User.create({ authKey, userProfile })
-      }      
+      user=await User.create({ authKey: context, userId: userProfile.id, userName: userProfile.name,authMethod:'Viber' })        
+      }   
+       const token = jwt.sign({ id: user._id },process.env.JWT_SECRET,{expiresIn:'60d'})
+      await user.updateOne({ token })        
       bot.sendMessage(
       userProfile,
       new TextMessage(
@@ -68,11 +72,11 @@ app.use("/upload", express.static(path.join(__dirname, "/upload")))
 app.get("/", (req, res) => {
   res.status(200).json({ message: "main page " })
 })
-app.post("/api",express.json(),  (req, res) => {
+app.post("/api",express.json(), async (req, res) => {
   const { authKey } = req.body
+  const user=await User.findOne({authKey})
   
-  
-  res.json({authKey})
+  res.status(200).json({token:user.token})
 })
 app.use("/viber/webhook", bot.middleware())
 

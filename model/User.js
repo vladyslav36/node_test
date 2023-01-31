@@ -4,7 +4,8 @@ const userSchema = mongoose.Schema({
   authKey: String,
   authMethod: String,
     token:String,
-    userProfile: {},
+    userId:String,
+    userName:String
   },
   {
     timestamps: true,
